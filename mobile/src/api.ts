@@ -9,7 +9,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 3000, // 3 seconds timeout
+  timeout: 3000
 });
 
 // Add token to requests if it exists

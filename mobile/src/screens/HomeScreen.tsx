@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Alert } from 'react-native';
-import { FAB, Card, Title, Paragraph, Button, Searchbar, IconButton } from 'react-native-paper';
+import { StyleSheet, View, FlatList, Alert, Text } from 'react-native';
+import { FAB, Card, Button, Searchbar, IconButton } from 'react-native-paper';
 import { useAuth } from '../contexts/AuthContext';
 import * as api from '../api';
 import { Note } from '../types';
@@ -62,7 +62,7 @@ export const HomeScreen = ({ navigation }: any) => {
     <Card style={styles.card}>
       <Card.Content>
         <View style={styles.cardHeader}>
-          <Title>{note.title}</Title>
+          <Text variant="titleLarge">{note.title}</Text>
           <View style={styles.cardActions}>
             <IconButton
               icon="pencil"
@@ -76,14 +76,21 @@ export const HomeScreen = ({ navigation }: any) => {
             />
           </View>
         </View>
-        <Paragraph numberOfLines={3} style={styles.content}>
+        <Text variant="bodyMedium" numberOfLines={3} style={styles.content}>
           {note.content}
-        </Paragraph>
+        </Text>
         <Text style={styles.timestamp}>
           {formatDistanceToNow(new Date(note.updatedAt), { addSuffix: true })}
         </Text>
       </Card.Content>
     </Card>
+  );
+
+  const emptyNotesView = () => (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>No notes yet</Text>
+      <Text style={styles.emptySubText}>Tap the + button to create one</Text>
+    </View>
   );
 
   return (
@@ -102,7 +109,11 @@ export const HomeScreen = ({ navigation }: any) => {
         data={filteredNotes}
         renderItem={renderNoteCard}
         keyExtractor={item => item._id}
-        contentContainerStyle={styles.notesList}
+        contentContainerStyle={[
+          styles.notesList,
+          !filteredNotes.length && styles.emptyList
+        ]}
+        ListEmptyComponent={emptyNotesView}
         onRefresh={loadNotes}
         refreshing={loading}
       />
@@ -110,6 +121,7 @@ export const HomeScreen = ({ navigation }: any) => {
       <FAB
         style={styles.fab}
         icon="plus"
+        label="Add Note"
         onPress={() => navigation.navigate('EditNote')}
       />
     </View>
@@ -119,11 +131,14 @@ export const HomeScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f5f5f5',
   },
   header: {
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    elevation: 4,
   },
   searchbar: {
     flex: 1,
@@ -132,8 +147,27 @@ const styles = StyleSheet.create({
   notesList: {
     padding: 16,
   },
+  emptyList: {
+    flex: 1,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 100,
+  },
+  emptyText: {
+    fontSize: 20,
+    color: '#666',
+    marginBottom: 8,
+  },
+  emptySubText: {
+    fontSize: 16,
+    color: '#999',
+  },
   card: {
     marginBottom: 16,
+    elevation: 2,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -157,5 +191,6 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+    backgroundColor: '#2196F3',
   },
 });

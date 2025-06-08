@@ -18,13 +18,8 @@ export const LoginScreen = ({ navigation }: any) => {
       const { token, user } = await api.login(username, password);
       await login(token, user);
     } catch (err: any) {
-      if (err.code === 'ECONNABORTED') {
-        setError('Connection timeout. Please try again.');
-      } else if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError('Network error. Please check your connection.');
-      }
+      // setError(err.response?.data?.message || 'An error occurred');
+      setError(err)
     } finally {
       setLoading(false);
     }
