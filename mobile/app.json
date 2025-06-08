@@ -1,29 +1,29 @@
 {
-  "expo": {
-    "name": "noter",
-    "slug": "noter",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
-  }
+	"expo": {
+		"android": {
+			"adaptiveIcon": {
+				"backgroundColor": "#ffffff",
+				"foregroundImage": "./assets/adaptive-icon.png"
+			},
+			"edgeToEdgeEnabled": true
+		},
+		"icon": "./assets/icon.png",
+		"ios": {
+			"supportsTablet": true
+		},
+		"name": "noter",
+		"newArchEnabled": true,
+		"orientation": "portrait",
+		"slug": "noter",
+		"splash": {
+			"backgroundColor": "#ffffff",
+			"image": "./assets/splash-icon.png",
+			"resizeMode": "contain"
+		},
+		"userInterfaceStyle": "light",
+		"version": "1.0.0",
+		"web": {
+			"favicon": "./assets/favicon.png"
+		}
+	}
 }

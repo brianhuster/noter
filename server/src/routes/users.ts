@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
 // Get user profile
 router.get('/profile', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.user.id);
     res.json(user);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching profile' });

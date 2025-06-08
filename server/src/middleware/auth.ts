@@ -6,10 +6,13 @@ interface TokenPayload {
   id: string;
 }
 
+// Extend Express Request type
 declare global {
   namespace Express {
     interface Request {
-      userId?: string;
+      user: {
+        id: string;
+      };
     }
   }
 }
@@ -29,7 +32,8 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
       throw new Error();
     }
 
-    req.userId = user.id;
+    // Add user ID to request
+    req.user = { id: user._id.toString() };
     next();
   } catch (error) {
     res.status(401).json({ message: 'Please authenticate' });

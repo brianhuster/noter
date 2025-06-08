@@ -7,21 +7,20 @@ const router = express.Router();
 // Get all notes for the authenticated user
 router.get('/', auth, async (req, res) => {
   try {
-    const notes = await Note.find({ user: req.userId }).sort({ updatedAt: -1 });
+    const notes = await Note.find({ user: req.user.id}).sort({ updatedAt: -1 });
     res.json(notes);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching notes' });
   }
 });
 
-// Create a new note
 router.post('/', auth, async (req, res) => {
   try {
     const { title, content } = req.body;
     const note = new Note({
       title,
       content,
-      user: req.userId,
+      user: req.user.id,
     });
     await note.save();
     res.status(201).json(note);
@@ -30,10 +29,9 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// Get a specific note
 router.get('/:id', auth, async (req, res) => {
   try {
-    const note = await Note.findOne({ _id: req.params.id, user: req.userId });
+    const note = await Note.findOne({ _id: req.params.id, user: req.user.id });
     if (!note) {
       res.status(404).json({ message: 'Note not found' });
       return;
@@ -44,12 +42,11 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
-// Update a note
 router.put('/:id', auth, async (req, res) => {
   try {
     const { title, content } = req.body;
     const note = await Note.findOneAndUpdate(
-      { _id: req.params.id, user: req.userId },
+      { _id: req.params.id, user: req.user.id },
       { title, content },
       { new: true }
     );
@@ -63,16 +60,16 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
-// Delete a note
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const note = await Note.findOneAndDelete({ _id: req.params.id, user: req.userId });
+    const note = await Note.findOneAndDelete({ _id: req.params.id, user: req.user.id });
     if (!note) {
-      res.status(404).json({ message: 'Note not found' });
-      return;
+      return res.status(404).json({ message: 'Note not found' });
     }
-    res.json({ message: 'Note deleted' });
+    return res.json({ message: 'Note deleted' });
   } catch (error) {
+    console.error('Error deleting note:', error);
+    return res.status(500).json({ message: 'Error deleting note' });
     res.status(500).json({ message: 'Error deleting note' });
   }
 });
