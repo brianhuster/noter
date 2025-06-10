@@ -34,11 +34,10 @@ export const QuizScreen = ({ route, navigation }: any) => {
 		} catch (error: any) {
 			console.error('Quiz generation error:', error);
 			const errorMessage = error.response?.data?.message || error.message || 'Failed to generate quiz';
-			// Use Dialog instead of Alert for web compatibility
 			setGenerating(false);
 			setShowConfirmDialog(false);
 			navigation.goBack();
-			// Small delay to ensure the navigation is complete before showing the error
+
 			setTimeout(() => {
 				Alert.alert('Error', errorMessage);
 			}, 100);

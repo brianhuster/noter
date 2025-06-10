@@ -46,13 +46,13 @@ export const updateNote = async (id: string, title: string, content: string) => 
 };
 
 export const deleteNote = async (id: string) => {
-  try {
-    const response = await api.delete(`/notes/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error('API Error - deleteNote:', error);
-    throw error; // Re-throw to let the component handle it
-  }
+	try {
+		const response = await api.delete(`/notes/${id}`);
+		return response.data;
+	} catch (error) {
+		console.error('API Error - deleteNote:', error);
+		throw error;
+	}
 };
 
 export const generateQuiz = async (noteId: string) => {

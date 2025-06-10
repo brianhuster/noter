@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Alert, Text } from 'react-native';
+import { StyleSheet, View, FlatList, Text } from 'react-native';
 import { FAB, Card, Button, Searchbar, IconButton } from 'react-native-paper';
 import { useAuth } from '../contexts/AuthContext';
 import * as api from '../api';
@@ -32,33 +32,33 @@ export const HomeScreen = ({ navigation }: any) => {
 		note.content.toLowerCase().includes(searchQuery.toLowerCase())
 	);
 
-  const renderNoteCard = ({ item: note }: { item: Note }) => (
-    <Card style={styles.card}>
-      <Card.Content>
-        <View style={styles.cardHeader}>
-          <Text style={styles.titleText}>{note.title}</Text>
-          <View style={styles.cardActions}>
-            <IconButton
-              icon="brain"
-              size={20}
-              onPress={() => navigation.navigate('Quiz', { noteId: note._id })}
-            />
-            <IconButton
-              icon="history"
-              size={20}
-              onPress={() => navigation.navigate('QuizHistory', { noteId: note._id })}
-            />
+	const renderNoteCard = ({ item: note }: { item: Note }) => (
+		<Card style={styles.card}>
+			<Card.Content>
+				<View style={styles.cardHeader}>
+					<Text style={styles.titleText}>{note.title}</Text>
+					<View style={styles.cardActions}>
+						<IconButton
+							icon="brain"
+							size={20}
+							onPress={() => navigation.navigate('Quiz', { noteId: note._id })}
+						/>
+						<IconButton
+							icon="history"
+							size={20}
+							onPress={() => navigation.navigate('QuizHistory', { noteId: note._id })}
+						/>
 						<IconButton
 							icon="pencil"
-              size={20}
-              onPress={() => navigation.navigate('EditNote', { noteId: note._id })}
-            />
-          </View>
-        </View>
-      </Card.Content>
-     </Card>
-  )
-            
+							size={20}
+							onPress={() => navigation.navigate('EditNote', { noteId: note._id })}
+						/>
+					</View>
+				</View>
+			</Card.Content>
+		</Card>
+	)
+
 	const emptyNotesView = () => (
 		<View style={styles.emptyContainer}>
 			<Text style={styles.emptyText}>No notes yet</Text>

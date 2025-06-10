@@ -48,7 +48,7 @@ export const EditNoteScreen = ({ route, navigation }: any) => {
 				await api.updateNote(noteId, title, content);
 				Alert.alert('Success', 'Note updated successfully');
 			} else {
-				const newNote = await api.createNote(title, content);
+				await api.createNote(title, content);
 				Alert.alert('Success', 'Note created successfully');
 				navigation.navigate('Home');
 			}

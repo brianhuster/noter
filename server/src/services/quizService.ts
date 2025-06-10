@@ -11,6 +11,15 @@ if (!gemini_api_key) {
 const ai = new GoogleGenAI({ apiKey: gemini_api_key });
 const model = 'gemini-2.0-flash'
 
+function cleanAIResponse(text: string): string {
+    // Remove any markdown code block markers
+    const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+    if (jsonMatch) {
+        return jsonMatch[1].trim();
+    }
+    return text.trim();
+}
+
 export interface GeneratedQuestion {
 	question: string;
 	options: string[];
@@ -42,7 +51,7 @@ Example:
 ]
 "
 
-Make sure the questions really test understanding of the note content. And your response must contains plain JSON string only, nothing else, not even Markdown thing like "\`\`\`json", etc`;
+Make sure the questions really test understanding of the note content, and are written in the same language as the note. And your response must contains plain JSON string only, nothing else, not even Markdown thing like "\`\`\`json", etc. In other word, I must be able to copy your response to a JSON file without seeing any diagnostic error.`;
 
 		const response = await ai.models.generateContent({
 			model: model,
@@ -54,8 +63,9 @@ Make sure the questions really test understanding of the note content. And your 
             throw new Error('No response text from AI');
 		}
         console.log(text)
+		const cleanText = cleanAIResponse(text);
 		// Parse the JSON response - it should be an array of question objects
-		const questions = JSON.parse(text);
+		const questions = JSON.parse(cleanText);
         console.log(questions)
 
 		// Validate the response format

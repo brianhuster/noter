@@ -7,7 +7,6 @@ const router = express.Router();
 
 // For development only
 if (process.env.NODE_ENV !== 'production') {
-    // Get all users
     router.get('/users', async (req, res) => {
         try {
             const users = await User.find({}).select('-password');
@@ -17,7 +16,6 @@ if (process.env.NODE_ENV !== 'production') {
         }
     });
 
-    // Get all notes
     router.get('/notes', async (req, res) => {
         try {
             const notes = await Note.find({});
@@ -27,7 +25,6 @@ if (process.env.NODE_ENV !== 'production') {
         }
     });
 
-    // Get all quizzes
     router.get('/quizzes', async (req, res) => {
         try {
             const quizzes = await Quiz.find({});

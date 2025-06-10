@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, Alert } from 'react-native';
-import { Text, Card, ActivityIndicator, IconButton } from 'react-native-paper';
+import { Text, Card, ActivityIndicator } from 'react-native-paper';
 import * as api from '../api';
 import { Quiz } from '../types';
 import { formatDistanceToNow } from 'date-fns';
